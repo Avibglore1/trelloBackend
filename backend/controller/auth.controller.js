@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import User from "../model/user.model.js";
-
+import bcrypt from "bcrypt"
 export const authController = async(req,res) =>{
     const {username,password} = req.body;
-    let user = await User.findOne(username);
+    let user = await User.findOne({username});
     if(!user){
         const hashedPassword = await bcrypt.hash(password,10)
         user = await User.create({

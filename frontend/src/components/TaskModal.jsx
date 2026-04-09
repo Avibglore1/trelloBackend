@@ -5,14 +5,15 @@ export function TaskModal({ close }) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [assignedTo, setAssignedTo] = useState("poorti");
+  const [status, setStatus] = useState("todo");
 
   const token = localStorage.getItem("token");
 
   const createTask = async () => {
     await axios.post(
       "http://localhost:5000/tasks",
-      { title, description: desc, assignedTo },
-      { headers: { Authorization: token } }
+      { title, description: desc, assignedTo, status },
+      { headers: { Authorization: `Bearer ${token}` } }
     );
 
     close();
@@ -43,7 +44,17 @@ export function TaskModal({ close }) {
           <option value="poorti">Poorti</option>
           <option value="avinash">Avinash</option>
         </select>
-
+        <select
+          className="w-full border px-3 py-2 rounded"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option value="todo">Todo</option>
+          <option value="inprogress">In Progress</option>
+          <option value="review">Review</option>
+          <option value="completed">Completed</option>
+        </select>
+        
         <div className="flex justify-end gap-2">
           <button onClick={close}>Cancel</button>
           <button

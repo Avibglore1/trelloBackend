@@ -27,12 +27,13 @@ export const getAllTaskController = async(req,res) =>{
         : await Task.find({assignedTo: req.user.username});
          res.json(tasks);
     } catch (error) {
-        return res.staus(500).json({message: error.message})
+        return res.status(500).json({message: error.message})
     }
 }
 
 export const updateTaskController = async(req,res)=>{
     try {
+        console.log("Backend received ID:", req.params.id);
         const task = await Task.findByIdAndUpdate(req.params.id,req.body,{new: true});
         io.emit("taskUpdated", task);
         res.json(task);
