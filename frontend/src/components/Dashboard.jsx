@@ -47,7 +47,6 @@ function Dashboard({user}) {
     const handleDragEnd = async ({ active, over }) => {
     if (!over) return;
       const taskId = active.id;
-      console.log("Dragged Task ID:", active.id);
       const newStatus = over.data.current?.status;
       if(!newStatus) return
 
